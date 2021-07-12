@@ -1,0 +1,13 @@
+input {
+  border-width: 1px;
+  border-radius: 0;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.column-header {
+  display: grid;
+  grid-template-columns: 9fr 44px 44px 44px;
+  border-width: 1px 0 1px 0px;
+  border-style: solid;
+  border-color: black;
+}
