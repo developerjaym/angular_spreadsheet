@@ -19,11 +19,7 @@ export class RowComponent extends TrackableDataItemComponent implements OnInit {
   @Input()
   r: number;
 
-  showingOptionsFor = {
-    book: -1,
-    sheet: -1,
-    row: -1,
-  };
+  showingOptions = false;
 
   constructor(private dataService: DataService) {
     super();
@@ -32,37 +28,10 @@ export class RowComponent extends TrackableDataItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  shouldShowOptions(book: number, sheet: number, row: number): boolean {
-    return (
-      this.showingOptionsFor.book === book &&
-      this.showingOptionsFor.sheet === sheet &&
-      this.showingOptionsFor.row === row
-    );
-  }
-  showOptions(book: number, sheet: number, row: number): void {
-    if (this.shouldShowOptions(book, sheet, row)) {
-      //reset
-      this.resetShowOptions();
-      return;
-    }
-    this.showingOptionsFor.book = book;
-    this.showingOptionsFor.sheet = sheet;
-    this.showingOptionsFor.row = row;
-  }
-  resetShowOptions(): void {
-    this.showingOptionsFor = {
-      book: -1,
-      sheet: -1,
-      row: -1,
-    };
-  }
-
   addRowAt(book: number, sheet: number, row: number): void {
-    this.resetShowOptions();
     this.dataService.addRowAt(book, sheet, row);
   }
   removeRowAt(book: number, sheet: number, row: number): void {
-    this.resetShowOptions();
     this.dataService.removeRowAt(book, sheet, row);
   }
 

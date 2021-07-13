@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Book, Column, Sheet } from './model/model';
+import { TrackableDataItemComponent } from './component/trackable-data-item/trackable-data-item.component';
+import { Book } from './model/model';
 import { DataService } from './service/data.service';
 
 @Component({
@@ -7,76 +8,28 @@ import { DataService } from './service/data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends TrackableDataItemComponent implements OnInit {
   title = 'spreadsheet';
   books: Book[] = [];
-  showingOptionsFor = {
-    book: -1,
-    sheet: -1,
-    row: -1,
-  };
+  activeBook: Book;
 
-  constructor(private dataService: DataService){}
+  constructor(private dataService: DataService){super();}
 
   ngOnInit(): void {
-    // go through each column
-    // sort?
     this.books = this.dataService.get();
+    this.activeBook = this.books[0];
 
   }
 
-  shouldShowOptions(book: number, sheet: number, row: number): boolean {
-    return (
-      this.showingOptionsFor.book === book &&
-      this.showingOptionsFor.sheet === sheet &&
-      this.showingOptionsFor.row === row
-    );
+  addBookAt(book: number): void {
+    this.dataService.addBookAt(book);
   }
-  showOptions(book: number, sheet: number, row: number): void {
-    if (this.shouldShowOptions(book, sheet, row)) {
-      //reset
-      this.resetShowOptions();
-      return;
+  removeBookAt(book: number): void {
+    if(this.books.length > 1) {
+      this.dataService.removeBookAt(book);
     }
-    this.showingOptionsFor.book = book;
-    this.showingOptionsFor.sheet = sheet;
-    this.showingOptionsFor.row = row;
   }
-  resetShowOptions(): void {
-    this.showingOptionsFor = {
-      book: -1,
-      sheet: -1,
-      row: -1,
-    };
-  }
-  getGridTemplateColumns(sheet: Sheet): string {
-    let arr = [];
-    arr[sheet.columns.length - 1] = '1fr';
-    arr.fill('1fr'); // a grid column for each column;
-    arr.push('44px'); // a column for options
-    return arr.join(' ');
-  }
-  addRowAt(book: number, sheet: number, row: number): void {
-    this.resetShowOptions();
-    this.dataService.addRowAt(book, sheet, row);
-  }
-  removeRowAt(book: number, sheet: number, row: number): void {
-    this.resetShowOptions();
-    this.dataService.removeRowAt(book, sheet, row);
-  }
-  removeColumn(sheet: Sheet, column: Column): void {
-   this.dataService.removeColumn(sheet, column);
-  }
-  addColumn(book: number, sheet: number, column: number): void {
-    this.dataService.addColumn(book, sheet, column);
-  }
-  trackByIndex(index: number, obj: any): any {
-    return index;
-  }
-  toggleSort(book: number, sheet: number, column: number): void {
-    this.resetShowOptions();
-    this.dataService.toggleSort(book, sheet, column);
-  }
+
   save(): void {
     this.dataService.save();
   }

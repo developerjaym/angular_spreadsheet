@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-trackable-data-item',
@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./trackable-data-item.component.css']
 })
 export class TrackableDataItemComponent {
+
+  @Input()
+  showing: true;
 
   constructor() {}
 

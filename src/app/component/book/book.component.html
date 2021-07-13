@@ -1,1 +1,21 @@
-<p>book works!</p>
+<h1>{{ book.name }}</h1>
+<nav>
+  <span
+    *ngFor="let sheet of book.sheets; let s = index"
+    (click)="activeSheet = sheet"
+  >
+    <input [(ngModel)]="book.sheets[s].name" />
+    <button (click)="removeSheetAt(b, s)">X</button>
+    <button (click)="addSheetAt(b, s + 1)">+</button>
+  </span>
+</nav>
+<ng-container
+  *ngFor="let sheet of book.sheets; let s = index; trackBy: trackByIndex"
+>
+  <app-sheet
+    [sheet]="sheet"
+    [b]="b"
+    [s]="s"
+    *ngIf="sheet === activeSheet"
+  ></app-sheet>
+</ng-container>

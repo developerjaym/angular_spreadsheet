@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Column, Sheet, SortDirection } from '../model/model';
+import { Book, Column, Sheet, SortDirection } from '../model/model';
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +60,22 @@ export class DataService {
     newRow[sheetToAddTo.columns.length - 1] = '';
     newRow.fill('');
     sheetToAddTo.rows.splice(row, 0, newRow);
+  }
+  removeSheetAt(book: number, sheet: number): void {
+    this.books[book].sheets.splice(sheet, 1);
+  }
+  addSheetAt(book: number, sheet: number): void {
+    const bookToAddTo = this.books[book];
+    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [['']]};
+    bookToAddTo.sheets.splice(sheet, 0, newSheet);
+  }
+  removeBookAt(book: number): void {
+    this.books.splice(book, 1);
+  }
+  addBookAt(book: number): void {
+    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [['']]};
+    const newBook: Book = {name: 'New Book', sheets: [newSheet]};
+    this.books.splice(book, 0, newBook);
   }
   removeColumn(sheet: Sheet, column: Column): void {
     if (sheet.columns.length === 1) {

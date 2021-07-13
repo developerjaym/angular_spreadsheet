@@ -4,41 +4,23 @@
   <button>Import</button>
 </div>
 <nav>
-  <a href="#" *ngFor="let book of books">{{ book.name }}</a>
-</nav>
-<ng-container *ngFor="let book of books; let b = index; trackBy: trackByIndex">
-  <h1>{{ book.name }}</h1>
-  <nav>
-    <a href="#" *ngFor="let sheet of book.sheets">{{ sheet.name }}</a>
-  </nav>
-  <ng-container
-    *ngFor="let sheet of book.sheets; let s = index; trackBy: trackByIndex"
+  <span
+    *ngFor="let book of books; let b = index"
+    (click)="activeBook = book"
   >
-    <div
-      style="display: grid"
-      [ngStyle]="{ 'grid-template-columns': getGridTemplateColumns(sheet) }"
-    >
-      <span
-        class="column-header"
-        *ngFor="
-          let column of sheet.columns;
-          let c = index;
-          trackBy: trackByIndex
-        "
-      >
-        <input [(ngModel)]="sheet.columns[c].name" />
-        <button (click)="removeColumn(sheet, column)">-</button>
-        <button (click)="addColumn(b, s, c + 1)">+</button>
-        <button (click)="toggleSort(b, s, c)">{{ column.sort }}</button>
-      </span>
-      <button>...</button>
-      <ng-container
-        *ngFor="let row of sheet.rows; let r = index; trackBy: trackByIndex"
-      >
-        <app-row [row]="row" [b] = "b" [s]="s" [r]="r" [ngStyle]="{'grid-column-start': '1', 'grid-column-end': row.length+2}"></app-row>
-      </ng-container>
-      <button (click)="addRowAt(b, s, sheet.rows.length)">Add Row</button>
-    </div>
-  </ng-container>
+    <input [(ngModel)]="books[b].name" />
+    <button (click)="removeBookAt(b)">X</button>
+    <button (click)="addBookAt(b + 1)">+</button>
+  </span>
+</nav>
+<ng-container
+*ngFor="let book of books; let b = index; trackBy: trackByIndex"
+>
+
+  <app-book
+  [book]="book"
+  [b]="b"
+  *ngIf="book === activeBook"
+  ></app-book>
 </ng-container>
 {{ books | json }}

@@ -8,14 +8,14 @@
     *ngFor="let cell of row; let c = index; trackBy: trackByIndex"
     [(ngModel)]="row[c]"
   />
-  <button (click)="showOptions(b, s, r)">...</button>
+  <button (click)="showingOptions = !showingOptions">...</button>
 </div>
 <div
   style="display: flex; justify-content: flex-end"
+  *ngIf="showingOptions"
   [ngStyle]="{
     'grid-column-start': '1',
-    'grid-column-end': row.length + 2,
-    display: shouldShowOptions(b, s, r) ? 'flex' : 'none'
+    'grid-column-end': row.length + 2
   }"
 >
   <button (click)="addRowAt(b, s, r)">Add Row Above</button>
