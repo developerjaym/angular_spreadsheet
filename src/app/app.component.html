@@ -6,34 +6,39 @@
 <nav>
   <a href="#" *ngFor="let book of books">{{ book.name }}</a>
 </nav>
-<ng-container *ngFor="let book of books; let b = index; trackBy:trackByIndex;">
+<ng-container *ngFor="let book of books; let b = index; trackBy: trackByIndex">
   <h1>{{ book.name }}</h1>
   <nav>
     <a href="#" *ngFor="let sheet of book.sheets">{{ sheet.name }}</a>
   </nav>
-  <ng-container *ngFor="let sheet of book.sheets; let s = index; trackBy:trackByIndex;">
+  <ng-container
+    *ngFor="let sheet of book.sheets; let s = index; trackBy: trackByIndex"
+  >
     <div
       style="display: grid"
       [ngStyle]="{ 'grid-template-columns': getGridTemplateColumns(sheet) }"
     >
-      <span class="column-header" *ngFor="let column of sheet.columns; let c = index; trackBy:trackByIndex;">
-        <input [(ngModel)]="sheet.columns[c].name">
+      <span
+        class="column-header"
+        *ngFor="
+          let column of sheet.columns;
+          let c = index;
+          trackBy: trackByIndex
+        "
+      >
+        <input [(ngModel)]="sheet.columns[c].name" />
         <button (click)="removeColumn(sheet, column)">-</button>
-        <button (click)="addColumn(b, s, c+1)">+</button>
-        <button (click)="toggleSort(b, s, c)">{{column.sort}}</button>
+        <button (click)="addColumn(b, s, c + 1)">+</button>
+        <button (click)="toggleSort(b, s, c)">{{ column.sort }}</button>
       </span>
       <button>...</button>
-      <ng-container *ngFor="let row of sheet.rows; let r = index; trackBy:trackByIndex;" >
-        <input *ngFor="let cell of row; let c = index; trackBy:trackByIndex;" [(ngModel)]="row[c]" />
-          <button (click)="showOptions(b, s, r)">...</button>
-          <div style="display: flex; justify-content: flex-end;" [ngStyle]="{'grid-column-start': '1', 'grid-column-end': sheet.columns.length+2, 'display': shouldShowOptions(b, s, r) ? 'flex': 'none'}">
-            <button (click)="addRowAt(b, s, r)">Add Row Above</button>
-            <button (click)="removeRowAt(b, s, r)">Remove Row</button>
-            <button (click)="addRowAt(b, s, r+1)">Add Row Below</button>
-          </div>
-        </ng-container>
+      <ng-container
+        *ngFor="let row of sheet.rows; let r = index; trackBy: trackByIndex"
+      >
+        <app-row [row]="row" [b] = "b" [s]="s" [r]="r" [ngStyle]="{'grid-column-start': '1', 'grid-column-end': row.length+2}"></app-row>
+      </ng-container>
       <button (click)="addRowAt(b, s, sheet.rows.length)">Add Row</button>
     </div>
   </ng-container>
 </ng-container>
-{{books | json}}
+{{ books | json }}

@@ -1,0 +1,24 @@
+<div [ngStyle]="{
+  'grid-column-start': '1',
+  'grid-column-end': row.length + 2,
+  'display': 'grid',
+  'grid-template-columns': getGridTemplateColumns()
+}">
+  <input
+    *ngFor="let cell of row; let c = index; trackBy: trackByIndex"
+    [(ngModel)]="row[c]"
+  />
+  <button (click)="showOptions(b, s, r)">...</button>
+</div>
+<div
+  style="display: flex; justify-content: flex-end"
+  [ngStyle]="{
+    'grid-column-start': '1',
+    'grid-column-end': row.length + 2,
+    display: shouldShowOptions(b, s, r) ? 'flex' : 'none'
+  }"
+>
+  <button (click)="addRowAt(b, s, r)">Add Row Above</button>
+  <button (click)="removeRowAt(b, s, r)">Remove Row</button>
+  <button (click)="addRowAt(b, s, r + 1)">Add Row Below</button>
+</div>
