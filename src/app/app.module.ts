@@ -10,6 +10,7 @@ import { TrackableDataItemComponent } from './component/trackable-data-item/trac
 import { SheetComponent } from './component/sheet/sheet.component';
 import { ExportComponent } from './component/export/export.component';
 import { ImportComponent } from './component/import/import.component';
+import { BooksViewerComponent } from './component/books-viewer/books-viewer.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ImportComponent } from './component/import/import.component';
     TrackableDataItemComponent,
     SheetComponent,
     ExportComponent,
-    ImportComponent
+    ImportComponent,
+    BooksViewerComponent
   ],
   imports: [
     BrowserModule,

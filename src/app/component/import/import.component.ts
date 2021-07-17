@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Book } from 'src/app/model/model';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-import',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImportComponent implements OnInit {
 
-  constructor() { }
+  jsonString = '';
+
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  import(): void {
+    const jsonData: Book = JSON.parse(this.jsonString);
+    this.dataService.importBook(jsonData);
+    this.router.navigate(['']);
+  }
 }

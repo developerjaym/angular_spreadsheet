@@ -5,14 +5,17 @@ export interface Book {
 export interface Sheet {
   name: string;
   columns: Column[];
-  rows: string[][];
+  rows: Row[];
 }
 export interface Column {
   name: string;
   width: number;
   sort: SortDirection;
 }
-
+export interface Row {
+  data: string[],
+  options: {[key: string]: string};
+}
 export enum SortDirection {
   OFF = 'Off',
   ASC = 'Asc',

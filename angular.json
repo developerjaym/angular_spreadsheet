@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/spreadsheet/",
             "outputPath": "dist/spreadsheet",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -61,7 +62,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "spreadsheet:build"
+            "browserTarget": "spreadsheet:build",
+
+            "baseHref": "/spreadsheet/"
           },
           "configurations": {
             "production": {

@@ -1,15 +1,17 @@
-<h1>{{ book.name }}</h1>
-<nav>
+<h2>{{ book.name }}</h2>
+<nav class="tab-nav" role="tab-list">
   <span
     *ngFor="let sheet of book.sheets; let s = index"
     (click)="activeSheet = sheet"
+    class="nav-tab"
+    role="tab"
   >
-    <input [(ngModel)]="book.sheets[s].name" />
-    <button (click)="removeSheetAt(b, s)">X</button>
-    <button (click)="addSheetAt(b, s + 1)">+</button>
+    <input [(ngModel)]="book.sheets[s].name" [attr.aria-label]="'Sheet ' + s + ' name'" />
+    <button (click)="removeSheetAt(b, s)" title="Delete This Sheet">X</button>
+    <button (click)="addSheetAt(b, s + 1)" title="Add Sheet">+</button>
   </span>
 </nav>
-<ng-container
+<div class="tabbed-pane"
   *ngFor="let sheet of book.sheets; let s = index; trackBy: trackByIndex"
 >
   <app-sheet
@@ -18,4 +20,4 @@
     [s]="s"
     *ngIf="sheet === activeSheet"
   ></app-sheet>
-</ng-container>
+</div>

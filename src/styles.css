@@ -1,6 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: antiquewhite;
+}
+textarea {
+  width: 600vw;
+  max-width: 90vw;
+  box-sizing: border-box;
+  height: 600px;
+}
 input {
   border-width: 1px;
   border-radius: 0;
   border-color: rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  background-color: transparent;
+}
+
+button, .button-like {
+  background-color: rgb(223, 222, 222);
+  color: black;
+  border-width: 1px;
+  border-radius: 0;
+  border-style: solid;
+  padding: 1px 6px;
+  text-decoration: none;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tabbed-pane {
+}
+
+.tab-nav {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2px;
+
+  margin-bottom: 2px;
+
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: black;
+}
+
+.nav-tab {
+  display: flex;
+  flex-direction: row;
+
+  padding: 6px;
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: black;
+
+  margin-bottom: -2px;
+
+  background-color: rgb(248, 248, 231);
+}
+
+button:hover, .button-like:hover {
+  background-color: rgb(243, 242, 242);
 }

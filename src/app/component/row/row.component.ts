@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Row } from 'src/app/model/model';
 import { DataService } from 'src/app/service/data.service';
 import { TrackableDataItemComponent } from '../trackable-data-item/trackable-data-item.component';
 
@@ -10,7 +11,7 @@ import { TrackableDataItemComponent } from '../trackable-data-item/trackable-dat
 export class RowComponent extends TrackableDataItemComponent implements OnInit {
 
   @Input()
-  row: String[];
+  row: Row;
 
   @Input()
   b: number;
@@ -35,7 +36,11 @@ export class RowComponent extends TrackableDataItemComponent implements OnInit {
     this.dataService.removeRowAt(book, sheet, row);
   }
 
+  changeBackgroundColor(event): void {
+    console.log(JSON.stringify(event, null, 2));
+  }
+
   getGridTemplateColumns(): string {
-    return this.row.map(r => '1fr').join(' ') + ' 44px'
+    return this.row.data.map(r => '1fr').join(' ') + ' 44px'
   }
 }

@@ -7,9 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class TrackableDataItemComponent {
 
-  @Input()
-  showing: true;
-
   constructor() {}
 
   trackByIndex(index: number, obj: any): any {

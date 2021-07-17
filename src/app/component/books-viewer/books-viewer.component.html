@@ -1,0 +1,16 @@
+<nav class="app-nav">
+  <button (click)="save()" title="Save All Data to Your Browser's LocalStorage">Save</button>
+</nav>
+<h1>All Books</h1>
+<nav class="tab-nav" role="tab-list">
+  <a [routerLink]="['import']" class="button-like" title="Paste Compatible JSON into Textarea">Import Book</a>
+  <span *ngFor="let book of books; let b = index" (click)="activeBook = book" class="nav-tab" role="tab">
+    <input [(ngModel)]="books[b].name" [attr.aria-label]="'Sheet ' + s + ' name'"/>
+    <button (click)="removeBookAt(b)" title="Delete This Book">X</button>
+    <button (click)="addBookAt(b + 1)" title="Add Book">+</button>
+    <a [routerLink]="['export', b]" class="button-like" title="View This Book as JSON">Export Book</a>
+  </span>
+</nav>
+<div class="tabbed-pane" *ngFor="let book of books; let b = index; trackBy: trackByIndex">
+  <app-book [book]="book" [b]="b" *ngIf="book === activeBook"></app-book>
+</div>

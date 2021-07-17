@@ -28,7 +28,14 @@ export class BookComponent extends TrackableDataItemComponent implements OnInit 
     this.dataService.addSheetAt(book, sheet);
   }
   removeSheetAt(book: number, sheet: number, row: number): void {
-    if(this.book.sheets.length > 1) {
+    if(this.book.sheets.length === 1) {
+      return;
+    }
+    if(this.book.sheets[sheet] === this.activeSheet) {
+      this.dataService.removeSheetAt(book, sheet);
+      this.activeSheet = this.book.sheets[0];
+    }
+    else {
       this.dataService.removeSheetAt(book, sheet);
     }
   }

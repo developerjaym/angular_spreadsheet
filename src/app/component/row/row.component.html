@@ -1,14 +1,20 @@
 <div [ngStyle]="{
   'grid-column-start': '1',
-  'grid-column-end': row.length + 2,
+  'grid-column-end': row.data.length + 2,
   'display': 'grid',
-  'grid-template-columns': getGridTemplateColumns()
+  'grid-template-columns': getGridTemplateColumns(),
+  'background-color': row.options.backgroundColor || 'transparent'
 }">
   <input
-    *ngFor="let cell of row; let c = index; trackBy: trackByIndex"
-    [(ngModel)]="row[c]"
+    *ngFor="let cell of row.data; let c = index; trackBy: trackByIndex"
+    [(ngModel)]="row.data[c]"
+    [attr.aria-label]="'Column ' + c + ', Row ' + r"
+    [ngStyle]="{
+    'background-color': row.options.backgroundColor || 'transparent',
+    'color': row.options.color || 'black'
+  }"
   />
-  <button (click)="showingOptions = !showingOptions">...</button>
+  <button (click)="showingOptions = !showingOptions" title="View More Options">...</button>
 </div>
 <div
   style="display: flex; justify-content: flex-end"
@@ -18,7 +24,15 @@
     'grid-column-end': row.length + 2
   }"
 >
-  <button (click)="addRowAt(b, s, r)">Add Row Above</button>
-  <button (click)="removeRowAt(b, s, r)">Remove Row</button>
-  <button (click)="addRowAt(b, s, r + 1)">Add Row Below</button>
+  <button class="row-option" (click)="addRowAt(b, s, r)" title="Add Row Above">Add Row Above</button>
+  <button class="row-option" (click)="removeRowAt(b, s, r)" title="Delete Below">Remove Row</button>
+  <button class="row-option" (click)="addRowAt(b, s, r + 1)" title="Add Row Below">Add Row Below</button>
+  <label class="row-option button-like">
+    Set Foreground Color
+    <input type="color" [(ngModel)]="row.options.color" >
+  </label>
+  <label class="row-option button-like" >
+    Set Background Color
+    <input type="color" [(ngModel)]="row.options.backgroundColor" >
+  </label>
 </div>

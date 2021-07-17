@@ -10,25 +10,15 @@ export class DataService {
       name: 'Book 1',
       sheets: [
         {
-          rows: [
-            ['hi', 'hey', 'hello'],
-            ['konnichiwa', 'ohayoo gozaimasu', 'konbanwa'],
-            ['konnichiwa', 'ohayoo gozaimasu', 'konbanwa'],
+          rows: [{
+            data: ['Welcome'],
+            options: {}
+          },
           ],
           name: 'Sheet 1',
           columns: [
             {
               name: 'A',
-              width: 1,
-              sort: SortDirection.OFF,
-            },
-            {
-              name: 'B',
-              width: 1,
-              sort: SortDirection.OFF,
-            },
-            {
-              name: 'C',
               width: 1,
               sort: SortDirection.OFF,
             },
@@ -38,7 +28,7 @@ export class DataService {
     },
   ];
 
-  constructor() {}
+  constructor() {this.books = this.get();}
 
   get() {
     const dataString = localStorage.getItem("test-spreadsheet") || JSON.stringify(this.books);
@@ -47,6 +37,9 @@ export class DataService {
       book.sheets.forEach((sheet) => this.sortSheet(sheet))
     );
     return this.books;
+  }
+  getBook(book: number): Book {
+    return this.books[book];
   }
   save() {
     localStorage.setItem("test-spreadsheet", JSON.stringify(this.books));
@@ -59,23 +52,27 @@ export class DataService {
     const newRow = [];
     newRow[sheetToAddTo.columns.length - 1] = '';
     newRow.fill('');
-    sheetToAddTo.rows.splice(row, 0, newRow);
+    sheetToAddTo.rows.splice(row, 0, {data: newRow,  options: {}});
   }
   removeSheetAt(book: number, sheet: number): void {
     this.books[book].sheets.splice(sheet, 1);
   }
   addSheetAt(book: number, sheet: number): void {
     const bookToAddTo = this.books[book];
-    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [['']]};
+    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [{data: [''], options: {}}]};
     bookToAddTo.sheets.splice(sheet, 0, newSheet);
   }
   removeBookAt(book: number): void {
     this.books.splice(book, 1);
   }
   addBookAt(book: number): void {
-    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [['']]};
+    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [{data: [''], options: {}}]};
     const newBook: Book = {name: 'New Book', sheets: [newSheet]};
     this.books.splice(book, 0, newBook);
+  }
+  importBook(book: Book): void {
+    this.books.push(book);
+    this.save();
   }
   removeColumn(sheet: Sheet, column: Column): void {
     if (sheet.columns.length === 1) {
@@ -83,7 +80,7 @@ export class DataService {
     }
     const index = sheet.columns.findIndex((col) => col === column);
     sheet.columns.splice(index, 1);
-    sheet.rows.forEach((row) => row.splice(index, 1));
+    sheet.rows.forEach((row) => row.data.splice(index, 1));
   }
   addColumn(book: number, sheet: number, column: number): void {
     const sheetToAddTo = this.books[book].sheets[sheet];
@@ -93,7 +90,7 @@ export class DataService {
       sort: SortDirection.OFF,
     });
     sheetToAddTo.rows.forEach((row) => {
-      row.splice(column, 0, '');
+      row.data.splice(column, 0, '');
     });
   }
 

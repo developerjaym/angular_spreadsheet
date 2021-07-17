@@ -1,19 +1,20 @@
-<h1>{{ sheet.name }}</h1>
-
+<h3>{{ sheet.name }}</h3>
 <div
   style="display: grid"
   [ngStyle]="{ 'grid-template-columns': getGridTemplateColumns(sheet) }"
+  role="tab-list"
 >
   <span
     class="column-header"
     *ngFor="let column of sheet.columns; let c = index; trackBy: trackByIndex"
+    role="tab"
   >
-    <input [(ngModel)]="sheet.columns[c].name" />
-    <button (click)="removeColumn(sheet, column)">X</button>
-    <button (click)="addColumn(b, s, c + 1)">+</button>
-    <button (click)="toggleSort(b, s, c)">{{ column.sort }}</button>
+    <input [(ngModel)]="sheet.columns[c].name" [attr.aria-label]="'Column ' + c + ' header'"/>
+    <button (click)="removeColumn(sheet, column)" title="Delete This Column">X</button>
+    <button (click)="addColumn(b, s, c + 1)" title="Add Column">+</button>
+    <button (click)="toggleSort(b, s, c)" title="Toggle Sort">{{ column.sort }}</button>
   </span>
-  <button>...</button>
+  <button title="View More Options">...</button>
   <ng-container
     *ngFor="let row of sheet.rows; let r = index; trackBy: trackByIndex"
   >
@@ -28,5 +29,5 @@
       }"
     ></app-row>
   </ng-container>
-  <button (click)="addRowAt(b, s, sheet.rows.length)">Add Row</button>
+  <button (click)="addRowAt(b, s, sheet.rows.length)" title="Add Row">Add Row</button>
 </div>
