@@ -62,9 +62,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "spreadsheet:build",
-
-            "baseHref": "/spreadsheet/"
+            "browserTarget": "spreadsheet:build"
           },
           "configurations": {
             "production": {
