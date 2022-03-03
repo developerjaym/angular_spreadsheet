@@ -6,39 +6,38 @@ import { TrackableDataItemComponent } from '../trackable-data-item/trackable-dat
 @Component({
   selector: 'app-books-viewer',
   templateUrl: './books-viewer.component.html',
-  styleUrls: ['./books-viewer.component.css']
+  styleUrls: ['./books-viewer.component.css'],
 })
-export class BooksViewerComponent extends TrackableDataItemComponent implements OnInit {
+export class BooksViewerComponent
+  extends TrackableDataItemComponent
+  implements OnInit
+{
   title = 'spreadsheet';
   books: Book[] = [];
-  activeBook: Book;
 
-  constructor(private dataService: DataService){super();}
+  constructor(private dataService: DataService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.books = this.dataService.get();
-    this.activeBook = this.books[0];
-
   }
 
   addBookAt(book: number): void {
     this.dataService.addBookAt(book);
   }
   removeBookAt(book: number): void {
-    if(this.books.length === 1) {
+    if (this.books.length === 1) {
       return;
     }
-    if(this.books[book] === this.activeBook) {
-      this.dataService.removeBookAt(book);
-      this.activeBook = this.books[0];
-    }
-    else {
-      this.dataService.removeBookAt(book);
-    }
+    this.dataService.removeBookAt(book);
+  }
+
+  setActive(b: number): void {
+    this.dataService.setActiveBook(b);
   }
 
   save(): void {
     this.dataService.save();
   }
-
 }

@@ -1,8 +1,10 @@
 export interface Book {
   name: string;
   sheets: Sheet[];
+  active: boolean;
 }
 export interface Sheet {
+  active: boolean;
   name: string;
   columns: Column[];
   rows: Row[];

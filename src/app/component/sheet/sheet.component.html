@@ -14,7 +14,7 @@
     <button (click)="addColumn(b, s, c + 1)" title="Add Column">+</button>
     <button (click)="toggleSort(b, s, c)" title="Toggle Sort">{{ column.sort }}</button>
   </span>
-  <button title="View More Options">...</button>
+  <button title="View More Options" class="column-header-button">...</button>
   <ng-container
     *ngFor="let row of sheet.rows; let r = index; trackBy: trackByIndex"
   >

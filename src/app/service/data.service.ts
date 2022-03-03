@@ -7,18 +7,25 @@ import { Book, Column, Sheet, SortDirection } from '../model/model';
 export class DataService {
   books = [
     {
-      name: 'Book 1',
+      active: true,
+      name: 'My First Book',
       sheets: [
         {
+          active: true,
           rows: [{
-            data: ['Welcome'],
+            data: ['Welcome', ''],
             options: {}
           },
           ],
-          name: 'Sheet 1',
+          name: 'My First Sheet',
           columns: [
             {
               name: 'A',
+              width: 1,
+              sort: SortDirection.OFF,
+            },
+            {
+              name: 'B',
               width: 1,
               sort: SortDirection.OFF,
             },
@@ -55,19 +62,40 @@ export class DataService {
     sheetToAddTo.rows.splice(row, 0, {data: newRow,  options: {}});
   }
   removeSheetAt(book: number, sheet: number): void {
+    const activeSheetBeingDeleted = this.books[book].sheets[sheet].active;
     this.books[book].sheets.splice(sheet, 1);
+    if(activeSheetBeingDeleted) {
+      this.setActiveSheet(book, 0);
+    }
   }
   addSheetAt(book: number, sheet: number): void {
     const bookToAddTo = this.books[book];
-    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [{data: [''], options: {}}]};
+    const newSheet: Sheet = {active: false, name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [{data: [''], options: {}}]};
     bookToAddTo.sheets.splice(sheet, 0, newSheet);
   }
+  setActiveSheet(book: number, sheet: number): void {
+    this.books[book].sheets.forEach(s => s.active = false);
+    this.books[book].sheets[sheet].active = true;
+  }
+  setActiveBook(book: number): void {
+    this.books.forEach(b => {
+      b.active = false;
+      b.sheets.forEach(s => s.active = false);
+    });
+    this.books[book].active = true;
+    this.books[book].sheets[0].active = true;
+  }
   removeBookAt(book: number): void {
+    const activeBookBeingDeleted = this.books[book].active;
     this.books.splice(book, 1);
+    if(activeBookBeingDeleted) {
+      this.setActiveBook(0);
+      this.setActiveSheet(0, 0);
+    }
   }
   addBookAt(book: number): void {
-    const newSheet: Sheet = {name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [{data: [''], options: {}}]};
-    const newBook: Book = {name: 'New Book', sheets: [newSheet]};
+    const newSheet: Sheet = {active: false, name: 'New Sheet', columns: [{name: 'A', width: 1, sort: SortDirection.OFF}], rows: [{data: [''], options: {}}]};
+    const newBook: Book = {active: false, name: 'New Book', sheets: [newSheet]};
     this.books.splice(book, 0, newBook);
   }
   importBook(book: Book): void {
@@ -117,11 +145,12 @@ export class DataService {
         if (column.sort === SortDirection.OFF) {
           continue;
         } else if (column.sort === SortDirection.ASC) {
-          return row1[i] > row2[i] ? 1 : row1[i] === row2[i] ? 0 : -1;
+          return row1.data[i] > row2.data[i] ? 1 : row1.data[i] === row2.data[i] ? 0 : -1;
         }
-        return row1[i] > row2[i] ? -1 : row1[i] === row2[i] ? 0 : 1;
+        return row1.data[i] > row2.data[i] ? -1 : row1.data[i] === row2.data[i] ? 0 : 1;
       }
       return 0;
     });
   }
+
 }
