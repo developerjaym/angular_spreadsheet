@@ -1,5 +1,5 @@
 <h2>{{ book.name }}'s Sheets</h2>
-<nav class="tab-nav" role="tab-list">
+<nav class="tab-nav" role="tablist">
   <span
     *ngFor="let sheet of book.sheets; let s = index"
     (click)="setActive(s)"

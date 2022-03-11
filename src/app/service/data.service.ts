@@ -35,7 +35,10 @@ export class DataService {
     },
   ];
 
-  constructor() {this.books = this.get();}
+  constructor() {
+    this.books = this.get();
+    window.setInterval(() => this.save(), 30_000);
+  }
 
   get() {
     const dataString = localStorage.getItem("test-spreadsheet") || JSON.stringify(this.books);

@@ -36,8 +36,4 @@ export class BooksViewerComponent
   setActive(b: number): void {
     this.dataService.setActiveBook(b);
   }
-
-  save(): void {
-    this.dataService.save();
-  }
 }

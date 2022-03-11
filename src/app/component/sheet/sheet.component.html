@@ -2,12 +2,10 @@
 <div
   style="display: grid"
   [ngStyle]="{ 'grid-template-columns': getGridTemplateColumns(sheet) }"
-  role="tab-list"
 >
   <span
     class="column-header"
     *ngFor="let column of sheet.columns; let c = index; trackBy: trackByIndex"
-    role="tab"
   >
     <input [(ngModel)]="sheet.columns[c].name" [attr.aria-label]="'Column ' + c + ' header'"/>
     <button (click)="removeColumn(sheet, column)" title="Delete This Column">X</button>
@@ -25,7 +23,7 @@
       [r]="r"
       [ngStyle]="{
         'grid-column-start': '1',
-        'grid-column-end': row.length + 2
+        'grid-column-end': row.data.length + 2
       }"
     ></app-row>
   </ng-container>

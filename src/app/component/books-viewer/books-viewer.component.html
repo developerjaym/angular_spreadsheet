@@ -1,8 +1,5 @@
-<nav class="app-nav">
-  <button (click)="save()" title="Save All Data to Your Browser's LocalStorage">Save</button>
-</nav>
 <h1>All Books</h1>
-<nav class="tab-nav" role="tab-list">
+<nav class="tab-nav" role="tablist">
   <a [routerLink]="['import']" class="button-like" title="Paste Compatible JSON into Textarea">Import Book</a>
   <span *ngFor="let book of books; let b = index" (click)="setActive(b)" class="nav-tab" [ngClass]="{'nav-tab--active': book.active}" role="tab">
     <input [(ngModel)]="books[b].name" [attr.aria-label]="'Sheet ' + s + ' name'"/>

@@ -36,10 +36,6 @@ export class RowComponent extends TrackableDataItemComponent implements OnInit {
     this.dataService.removeRowAt(book, sheet, row);
   }
 
-  changeBackgroundColor(event): void {
-    console.log(JSON.stringify(event, null, 2));
-  }
-
   getGridTemplateColumns(): string {
     return this.row.data.map(r => '1fr').join(' ') + ' 44px'
   }
